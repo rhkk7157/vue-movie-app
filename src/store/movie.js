@@ -22,8 +22,8 @@ export default {
       })
       const res = await axios.get(`https://www.omdbapi.com/?&apikey=88f9becd&s=${state.title}`)
       console.log(res.data)
-      state.movies = res.data.Search
       commit('updateState', {
+        movies: res.data.Search,
         loading: false
       })
     }
