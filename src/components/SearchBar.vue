@@ -12,21 +12,28 @@
 </template>
 
 <script>
-import axios from 'axios'
+import { mapActions } from 'vuex'
+
 export default {
-  data () {
-    return {
-      title: '',
-      loading: false
+  computed: {
+    title: {
+      get () {
+        return this.$store.state.movie.title
+      },
+      set (title) {
+        this.$store.commit('movie/updateState', {
+          title
+        })
+      }
+    },
+    loading () {
+      return this.$store.state.movie.loading
     }
   },
   methods: {
-    async searchMovies () {
-      this.loading = true
-      const res = await axios.get(`https://www.omdbapi.com/?&apikey=88f9becd&s=${this.title}`)
-      console.log(res.data)
-      this.loading = false
-    }
+    ...mapActions('movie', [
+      'searchMovies'
+    ])
   }
 }
 </script>
